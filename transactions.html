@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alke Wallet - Movimientos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-light">
+
+    <nav class="navbar navbar-dark bg-info mb-4">
+        <div class="container">
+            <span class="navbar-brand text-white fw-bold">Historial de Movimientos</span>
+            <a href="menu.html" class="btn btn-sm btn-light text-info fw-bold">Volver al Menú</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-12 text-center">
+                <p class="text-muted mb-0">Saldo actual</p>
+                <h2 class="fw-bold text-info">$<span id="saldo-en-historial">0</span></h2>
+            </div>
+        </div>
+
+        <div class="card shadow-sm border-0">
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="bg-light">
+                            <tr>
+                                <th scope="col" class="ps-4 py-3 text-secondary">Fecha</th>
+                                <th scope="col" class="py-3 text-secondary">Descripción</th>
+                                <th scope="col" class="pe-4 py-3 text-end text-secondary">Monto</th>
+                            </tr>
+                        </thead>
+                        
+                        <tbody id="cuerpo-tabla">
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+            <div class="card-footer bg-white text-center py-3">
+                <small class="text-muted">Registro completo de transacciones</small>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>

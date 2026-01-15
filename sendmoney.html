@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alke Wallet - Enviar Dinero</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-light">
+
+    <nav class="navbar navbar-dark bg-warning mb-5">
+        <div class="container">
+            <span class="navbar-brand text-dark fw-bold">Realizar Transferencia</span>
+            <a href="menu.html" class="btn btn-sm btn-outline-dark">Volver al Menú</a>
+        </div>
+    </nav>
+
+    <div class="container d-flex justify-content-center">
+        <div class="card p-5 shadow-sm border-0" style="width: 500px;">
+            <div class="text-center mb-4">
+                <div class="display-1 mb-2">💸</div>
+                <h3 class="fw-bold">Enviar a Contacto</h3>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Destinatario</label>
+                <select class="form-select mb-3" id="contacto-destino">
+                    <option selected>Elegir contacto...</option>
+                    <option value="1">Mamá</option>
+                    <option value="2">Agustina (Xina)</option>
+                    <option value="3">Hermanos</option>
+                </select>
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label">Monto a transferir</label>
+                <div class="input-group input-group-lg">
+                    <span class="input-group-text">$</span>
+                    <input type="number" class="form-control" id="monto-envio" placeholder="0">
+                </div>
+                <div class="form-text">Saldo disponible: $<span id="saldo-para-envio">0</span></div>
+            </div>
+
+            <button id="btn-realizar-envio" class="btn btn-warning w-100 py-3 fw-bold shadow">
+                Transferir Fondos
+            </button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>
