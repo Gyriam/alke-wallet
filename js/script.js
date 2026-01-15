@@ -5,7 +5,7 @@ $(document).ready(function() {
         localStorage.setItem('walletSaldo', 50000);
     }
     
-    // Si no existe el historial, creamos uno vacío o con datos de prueba
+    // Si no existe el historial, creamos uno vacío
     if (localStorage.getItem('walletHistorial') === null) {
         let movimientosIniciales = [
             { fecha: '10 Ene 2026', descripcion: 'Bono de Bienvenida', monto: 50000, tipo: 'ingreso' }
@@ -23,27 +23,29 @@ $(document).ready(function() {
     // Función auxiliar para registrar movimiento
     function registrarMovimiento(descripcion, monto, tipo) {
         let historial = JSON.parse(localStorage.getItem('walletHistorial')) || [];
-        
         let fecha = new Date().toLocaleDateString('es-CL', { day: 'numeric', month: 'short', year: 'numeric' });
         
-        // Agregamos el nuevo movimiento al principio del array (unshift)
         historial.unshift({
             fecha: fecha,
             descripcion: descripcion,
             monto: monto,
-            tipo: tipo // 'ingreso' o 'gasto'
+            tipo: tipo
         });
 
         localStorage.setItem('walletHistorial', JSON.stringify(historial));
     }
 
-    // 2. LOGIN
+    // 2. LOGIN (¡AQUÍ ESTÁ EL CAMBIO!)
     $('#loginForm').on('submit', function(e) {
         e.preventDefault();
         let email = $('#email').val();
         let password = $('#password').val();
 
         if(email === 'user@alke.com' && password === '123456') {
+            // --- MAGIA: Ahora el mensaje sale SOLO si los datos son correctos ---
+            alert("¡Bienvenido a mi Alke Wallet! 🚀");
+            
+            // Después de que le den Aceptar a la alerta, se van al menú
             window.location.href = 'menu.html';
         } else {
             alert("Error: Usuario o contraseña incorrectos.");
@@ -57,8 +59,6 @@ $(document).ready(function() {
         if (monto > 0) {
             let nuevoSaldo = saldo + monto;
             localStorage.setItem('walletSaldo', nuevoSaldo);
-            
-            // REGISTRAMOS EL MOVIMIENTO REAL
             registrarMovimiento('Depósito en efectivo', monto, 'ingreso');
 
             alert(`¡Depósito exitoso!`);
@@ -71,35 +71,36 @@ $(document).ready(function() {
     // 4. ENVIAR DINERO
     $('#btn-realizar-envio').on('click', function() {
         let monto = parseInt($('#monto-envio').val());
-        let contactoSelect = document.getElementById("contacto-destino"); // Usamos JS nativo para obtener el texto
-        let nombreContacto = contactoSelect.options[contactoSelect.selectedIndex].text;
-        let contactoVal = $('#contacto-destino').val();
+        let contactoSelect = document.getElementById("contacto-destino");
+        // Verificamos si existe el select para evitar errores en otras paginas
+        if(contactoSelect) {
+             let nombreContacto = contactoSelect.options[contactoSelect.selectedIndex].text;
+             let contactoVal = $('#contacto-destino').val();
 
-        if (contactoVal === "" || contactoVal === null) {
-            alert("Selecciona un contacto.");
-            return;
-        }
+             if (contactoVal === "" || contactoVal === null) {
+                 alert("Selecciona un contacto.");
+                 return;
+             }
 
-        if (monto > 0 && monto <= saldo) {
-            let nuevoSaldo = saldo - monto;
-            localStorage.setItem('walletSaldo', nuevoSaldo);
+             if (monto > 0 && monto <= saldo) {
+                 let nuevoSaldo = saldo - monto;
+                 localStorage.setItem('walletSaldo', nuevoSaldo);
+                 registrarMovimiento(`Transferencia a ${nombreContacto}`, monto, 'gasto');
 
-            // REGISTRAMOS EL MOVIMIENTO REAL
-            registrarMovimiento(`Transferencia a ${nombreContacto}`, monto, 'gasto');
-
-            alert(`Transferencia exitosa.`);
-            window.location.href = 'menu.html';
-        } else {
-            alert("Fondos insuficientes o monto inválido.");
+                 alert(`Transferencia exitosa.`);
+                 window.location.href = 'menu.html';
+             } else {
+                 alert("Fondos insuficientes o monto inválido.");
+             }
         }
     });
 
-    // 5. CARGAR HISTORIAL (Solo para transactions.html)
+    // 5. CARGAR HISTORIAL
     if (window.location.pathname.includes('transactions.html')) {
         let historial = JSON.parse(localStorage.getItem('walletHistorial')) || [];
-        let tablaCuerpo = $('#cuerpo-tabla'); // Necesitamos agregar este ID en el HTML
+        let tablaCuerpo = $('#cuerpo-tabla');
 
-        tablaCuerpo.empty(); // Limpiamos lo que haya
+        tablaCuerpo.empty();
 
         historial.forEach(function(mov) {
             let colorClase = mov.tipo === 'ingreso' ? 'text-success' : 'text-danger';
